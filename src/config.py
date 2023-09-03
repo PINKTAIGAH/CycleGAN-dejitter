@@ -11,9 +11,11 @@ Hyper Parameters
 """
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Directory of files containing image datasets
-TRAIN_DIR = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/trainA/"
+TRAIN_DIR_HORSE = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
+TRAIN_DIR_ZEBRA = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
 # TRAIN_DIR = "/home/brunicam/myscratch/p3_scratch/p06_images/train/"
-VAL_DIR = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/testA/"
+VAL_DIR_HORSE = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/test_horses/"
+VAL_DIR_ZEBRA = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
 # VAL_DIR = "/home/brunicam/myscratch/p3_scratch/p06_images/val/"
 SIEMENS_VAL_DIR = "/home/giorgio/Desktop/val_siemens/"
 
@@ -22,21 +24,19 @@ BATCH_SIZE = 1
 SCHEDULAR_DECAY = 0.5
 SCHEDULAR_STEP = 20                         # Step size of learning rate schedular
 OPTIMISER_WEIGHTS = (0.5, 0.999)            # Beta parameters of Adam optimiser
-NUM_WORKERS = 2
-MAX_JITTER = 3
+NUM_WORKERS = 4
 PADDING_WIDTH = 30
 IMAGE_SIZE = 256 
 NOISE_SIZE = IMAGE_SIZE - PADDING_WIDTH*2
-SIGMA = 20                                  # Standard deviation of gaussian kernal for PSF
-CHANNELS_IMG = 1                            # Colour channels of input image tensors 
+CHANNELS_IMG = 3                            # Colour channels of input image tensors 
 L1_LAMBDA = 100
 LAMBDA_GP = 10
 LAMBDA_CYCLE = 10
 LAMBDA_IDENTITY = 0.0
-CORRELATION_LENGTH = 10
+NUM_RESIDUALS = 9                           # 9 if image 256p and 6 if image 128p
 NUM_EPOCHS = 200
 LOAD_MODEL = False
-SAVE_MODEL = True
+SAVE_MODEL = False
 
 CHECKPOINT_DISC_H_LOAD = "../models/discH.pth.tar"
 CHECKPOINT_DISC_Z_LOAD = "../models/discZ.pth.tar"
@@ -57,6 +57,13 @@ CRITIC_SCORE_FILE = "../raw_data/critic_score.txt"
 CRITIC_SCORE_TITLES = ["epoch", "disc_real", "disc_fake"]
 # WRITER_REAL = SummaryWriter("/home/brunicam/myscratch/p3_scratch/runs/real")
 # WRITER_FAKE = SummaryWriter("/home/brunicam/myscratch/p3_scratch/runs/fake")
+
+"""
+Jitter hyperparameters
+"""
+MAX_JITTER = 3
+SIGMA = 20                                  # Standard deviation of gaussian kernal for PSF
+CORRELATION_LENGTH = 10
 
 # Evaluation hyperparameters
 EVALUATION_EPOCHS = 100
