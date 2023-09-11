@@ -1,7 +1,4 @@
-from itertools import cycle
-from numpy import resize, save
 import torch
-import sys
 import config
 import utils
 from datasetFile import HorseZebraDataset

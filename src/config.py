@@ -1,5 +1,3 @@
-from skimage.filters import gaussian
-import numpy as np
 import torch
 from torch.utils.tensorboard.writer import SummaryWriter
 from torchvision.transforms import transforms as transform
@@ -11,12 +9,18 @@ Hyper Parameters
 """
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Directory of files containing image datasets
-TRAIN_DIR_HORSE = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
-TRAIN_DIR_ZEBRA = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
-# TRAIN_DIR = "/home/brunicam/myscratch/p3_scratch/p06_images/train/"
-VAL_DIR_HORSE = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/test_horses/"
-VAL_DIR_ZEBRA = "/home/giorgio/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
-# VAL_DIR = "/home/brunicam/myscratch/p3_scratch/p06_images/val/"
+### Directories on home PC ###
+TRAIN_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
+TRAIN_DIR_ZEBRA = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
+VAL_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/test_horses/"
+VAL_DIR_ZEBRA = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
+
+### Directories on Maxwell ###
+# TRAIN_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/train_horse/"
+# TRAIN_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/train_zebra/"
+# VAL_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/test_horse/"
+# VAL_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/test_zebra/"
+
 SIEMENS_VAL_DIR = "/home/giorgio/Desktop/val_siemens/"
 
 LEARNING_RATE = 2e-4
@@ -94,8 +98,8 @@ transformsFile = transform.Compose([
 transforms_concatinated = A.Compose(
     [
         A.Resize(width=IMAGE_SIZE, height=IMAGE_SIZE),
-        #A.HorizontalFlip(p=0.5),
-        A.Normalize(mean=[0.5, 0,5, 0,5], std=[0.5, 0.5, 0.5], max_pixel_value=255),
+        A.HorizontalFlip(p=0.5),
+        A.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5], max_pixel_value=255),
         ToTensorV2(),
     ],
     additional_targets={"image0": "image"}
