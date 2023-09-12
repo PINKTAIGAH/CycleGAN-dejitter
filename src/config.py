@@ -10,16 +10,16 @@ Hyper Parameters
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Directory of files containing image datasets
 ### Directories on home PC ###
-TRAIN_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
-TRAIN_DIR_ZEBRA = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
-VAL_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/test_horses/"
-VAL_DIR_ZEBRA = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
+# TRAIN_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
+# TRAIN_DIR_ZEBRA = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
+# VAL_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/test_horses/"
+# VAL_DIR_ZEBRA = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
 
 ### Directories on Maxwell ###
-# TRAIN_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/train_horse/"
-# TRAIN_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/train_zebra/"
-# VAL_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/test_horse/"
-# VAL_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/Cyclegan_data/horse2zebra/horse2zebra/test_zebra/"
+TRAIN_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
+TRAIN_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
+VAL_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/test_horse/"
+VAL_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
 
 SIEMENS_VAL_DIR = "/home/giorgio/Desktop/val_siemens/"
 
