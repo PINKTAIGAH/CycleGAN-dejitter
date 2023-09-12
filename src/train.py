@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm 
 from discriminator import Discriminator
-from generator import Generator
+from generatorUnet import Generator
 
 def train_function(
     disc_jitter, disc_unjitter, gen_jitter, gen_unjitter, train_loader,
