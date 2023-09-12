@@ -141,7 +141,7 @@ def main():
         )
 
     # Define training dataset and loader
-    train_dataset = JitteredDataset(4000, True)
+    train_dataset = JitteredDataset(1000, True)
 
     train_loader = DataLoader(
         train_dataset,
@@ -152,7 +152,7 @@ def main():
     )
 
     # Define training dataset and loader
-    val_dataset = JitteredDataset(4000, True)
+    val_dataset = JitteredDataset(1000, True)
 
     val_loader = DataLoader(
         val_dataset,
