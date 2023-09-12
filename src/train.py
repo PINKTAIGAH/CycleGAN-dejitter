@@ -171,10 +171,10 @@ def main():
         )
 
         if config.SAVE_MODEL and epoch % 5 == 0:
-            utils.save_checkpoint(gen_unjitter, opt_gen, filename=config.CHECKPOINT_GEN_H_SAVE)
-            utils.save_checkpoint(gen_jitter, opt_gen, filename=config.CHECKPOINT_GEN_Z_SAVE)
-            utils.save_checkpoint(disc_unjitter, opt_disc, filename=config.CHECKPOINT_DISC_H_SAVE)
-            utils.save_checkpoint(disc_jitter, opt_disc, filename=config.CHECKPOINT_DISC_Z_SAVE)
+            utils.save_checkpoint(gen_unjitter, opt_gen, filename=config.CHECKPOINT_GEN_UNJITTER_SAVE)
+            utils.save_checkpoint(gen_jitter, opt_gen, filename=config.CHECKPOINT_GEN_JITTER_SAVE)
+            utils.save_checkpoint(disc_unjitter, opt_disc, filename=config.CHECKPOINT_DISC_UNJITTER_SAVE)
+            utils.save_checkpoint(disc_jitter, opt_disc, filename=config.CHECKPOINT_DISC_JITTER_SAVE)
 
 
 if __name__ == "__main__":
