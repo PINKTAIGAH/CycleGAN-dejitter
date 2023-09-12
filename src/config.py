@@ -44,7 +44,7 @@ LAMBDA_IDENTITY = 0.0
 NUM_RESIDUALS = 9                           # 9 if image 256p and 6 if image 128p
 NUM_EPOCHS = 200
 LOAD_MODEL = False
-SAVE_MODEL = False
+SAVE_MODEL = True
 
 CHECKPOINT_DISC_JITTER_LOAD = "../models/discJitter.pth.tar"
 CHECKPOINT_DISC_UNJITTER_LOAD = "../models/discUnjitter.pth.tar"
@@ -79,8 +79,6 @@ EVALUATION_METRIC_FILE = "../raw_data/siemens_sigma.txt"
 
 EVALUATION_IMAGE_FILE = "../evaluation/module/"
 
-CHECKPOINT_DISC_LOAD = "../models/disc.p06_img.tar"
-CHECKPOINT_GEN_LOAD = "../models/gen.p06_img.tar"
 
 """
 Tensor Transformations
