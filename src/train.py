@@ -105,10 +105,12 @@ def main():
     gen_jitter = Generator(
         imageChannels=config.CHANNELS_IMG,
         numResiduals=config.NUM_RESIDUALS,
+        numFeatures=64,
     ).to(config.DEVICE)
     gen_unjitter = Generator(
         imageChannels=config.CHANNELS_IMG,
         numResiduals=config.NUM_RESIDUALS,
+        numFeatures=64,
     ).to(config.DEVICE)
 
     opt_disc = optim.Adam(

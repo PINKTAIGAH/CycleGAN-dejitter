@@ -111,10 +111,10 @@ class Generator(nn.Module):
 
     Parameters
     ----------
-    inChannels: int
+    imageChannels: int
         Number of colour channels in discriminator input
 
-    features: int
+    numFeatures: int
         A coefficient used to compute the number of channels generated at each 
         convolution clock of the UNET
 
@@ -123,61 +123,61 @@ class Generator(nn.Module):
     While the UNET can take input image tensors of various sizes, it is designed
     to optimally generate tensor images of size 256*256
     """
-    def __init__(self, inChannels=3, features=64):
+    def __init__(self, imageChannels=3, numFeatures=64, numResiduals=None ):
         super().__init__()
         self.initialDown = nn.Sequential(
             nn.Conv2d(
-                inChannels, features, kernel_size=4, stride=2, padding=1,
+                imageChannels, numFeatures, kernel_size=4, stride=2, padding=1,
                 padding_mode="reflect"), 
             nn.LeakyReLU(0.2),
         )
         self.down1 = Block(
-            features, features * 2, down=True, act="leaky", useDropout=False
+            numFeatures, numFeatures * 2, down=True, act="leaky", useDropout=False
         )
         self.down2 = Block(
-            features * 2, features * 4, down=True, act="leaky", useDropout=False
+            numFeatures * 2, numFeatures * 4, down=True, act="leaky", useDropout=False
         )
         self.down3 = Block(
-            features * 4, features * 8, down=True, act="leaky", useDropout=False
+            numFeatures * 4, numFeatures * 8, down=True, act="leaky", useDropout=False
         )
         self.down4 = Block(
-            features * 8, features * 8, down=True, act="leaky", useDropout=False
+            numFeatures * 8, numFeatures * 8, down=True, act="leaky", useDropout=False
         )
         self.down5 = Block(
-            features * 8, features * 8, down=True, act="leaky", useDropout=False
+            numFeatures * 8, numFeatures * 8, down=True, act="leaky", useDropout=False
         )
         self.down6 = Block(
-            features * 8, features * 8, down=True, act="leaky", useDropout=False
+            numFeatures * 8, numFeatures * 8, down=True, act="leaky", useDropout=False
         )
         self.bottleneck = nn.Sequential(
-            nn.Conv2d(features * 8, features * 8, 4, 2, 1), nn.ReLU(),
+            nn.Conv2d(numFeatures * 8, numFeatures * 8, 4, 2, 1), nn.ReLU(),
         )
         self.up1 = Block(
-            features * 8, features * 8, down=False, act="relu", useDropout=True
+            numFeatures * 8, numFeatures * 8, down=False, act="relu", useDropout=True
         )
         # Input features are doubled as input tensor is concatinated due to skip 
         # conneciton
         self.up2 = Block(
-            features * 8 * 2, features * 8, down=False, act="relu", useDropout=True
+            numFeatures * 8 * 2, numFeatures * 8, down=False, act="relu", useDropout=True
         )
         self.up3 = Block(
-            features * 8 * 2, features * 8, down=False, act="relu", useDropout=True
+            numFeatures * 8 * 2, numFeatures * 8, down=False, act="relu", useDropout=True
         )
         self.up4 = Block(
-            features * 8 * 2, features * 8, down=False, act="relu", useDropout=False
+            numFeatures * 8 * 2, numFeatures * 8, down=False, act="relu", useDropout=False
         )
         self.up5 = Block(
-            features * 8 * 2, features * 4, down=False, act="relu", useDropout=False
+            numFeatures * 8 * 2, numFeatures * 4, down=False, act="relu", useDropout=False
         )
         self.up6 = Block(
-            features * 4 * 2, features * 2, down=False, act="relu", useDropout=False
+            numFeatures * 4 * 2, numFeatures * 2, down=False, act="relu", useDropout=False
         )
         self.up7 = Block(
-            features * 2 * 2, features, down=False, act="relu", useDropout=False
+            numFeatures * 2 * 2, numFeatures, down=False, act="relu", useDropout=False
         )
         self.finalUp = nn.Sequential(
             nn.ConvTranspose2d(
-                features * 2, inChannels, kernel_size=4, stride=2, padding=1
+                numFeatures * 2, imageChannels, kernel_size=4, stride=2, padding=1
             ),
             nn.Tanh(),
         )
@@ -221,7 +221,7 @@ class Generator(nn.Module):
 
 def test():
     x = torch.randn((1, 1, 256, 256))
-    model = Generator(inChannels=1, features=64)
+    model = Generator(imageChannels=1, numFeatures=64)
     preds = model(x)
     print(preds.shape)
 
