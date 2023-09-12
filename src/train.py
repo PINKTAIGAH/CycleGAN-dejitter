@@ -36,11 +36,11 @@ def train_function(disc_H, disc_Z, gen_H, gen_Z, loader, opt_disc, opt_gen,
 
             # Find disc loss for zebras
             # Generate fake zebras image
-            fake_zebra = gen_H(horse)
+            fake_zebra = gen_Z(horse)
             # Get disc score for real and fake horse image
-            disc_zebra_real = disc_H(zebra)
+            disc_zebra_real = disc_Z(zebra)
             # Use detach and this will be used to train generator aswell
-            disc_zebra_fake = disc_H(fake_zebra.detach())
+            disc_zebra_fake = disc_Z(fake_zebra.detach())
             
             disc_zebra_real_loss = MSE(disc_zebra_real, torch.ones_like(disc_zebra_real))
             disc_zebra_fake_loss = MSE(disc_zebra_fake, torch.zeros_like(disc_zebra_fake))
