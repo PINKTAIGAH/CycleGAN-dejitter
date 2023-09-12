@@ -5,9 +5,8 @@ import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 """
-Hyper Parameters
+horse2zebra dataset directories 
 """
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # Directory of files containing image datasets
 ### Directories on home PC ###
 # TRAIN_DIR_HORSE = "/media/giorgio/HDD/GAN/CycleGAN_data/horse2zebra/horse2zebra/train_horse/"
@@ -20,6 +19,11 @@ TRAIN_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/hor
 TRAIN_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/train_zebra/"
 VAL_DIR_HORSE = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/test_horse/"
 VAL_DIR_ZEBRA = "/home/brunicam/GPFS/petra3/scratch/brunicam/CycleGAN_data/horse2zebra/horse2zebra/test_zebra/"
+
+"""
+Hyper Parameters
+"""
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 SIEMENS_VAL_DIR = "/home/giorgio/Desktop/val_siemens/"
 
@@ -42,15 +46,15 @@ NUM_EPOCHS = 200
 LOAD_MODEL = False
 SAVE_MODEL = False
 
-CHECKPOINT_DISC_H_LOAD = "../models/discH.pth.tar"
-CHECKPOINT_DISC_Z_LOAD = "../models/discZ.pth.tar"
-CHECKPOINT_GEN_H_LOAD = "../models/genH.pth.tar"
-CHECKPOINT_GEN_Z_LOAD = "../models/genZ.pth.tar"
+CHECKPOINT_DISC_JITTER_LOAD = "../models/discJitter.pth.tar"
+CHECKPOINT_DISC_UNJITTER_LOAD = "../models/discUnjitter.pth.tar"
+CHECKPOINT_GEN_JITTER_LOAD = "../models/genJitter.pth.tar"
+CHECKPOINT_GEN_UNJITTER_LOAD = "../models/genUnjitter.pth.tar"
 
-CHECKPOINT_DISC_H_SAVE = "../models/discH.pth.tar"
-CHECKPOINT_DISC_Z_SAVE = "../models/discZ.pth.tar"
-CHECKPOINT_GEN_H_SAVE = "../models/genH.pth.tar"
-CHECKPOINT_GEN_Z_SAVE = "../models/genZ.pth.tar"
+CHECKPOINT_DISC_JITTER_SAVE = "../models/discJitter.pth.tar"
+CHECKPOINT_DISC_UNJITTER_SAVE = "../models/discUnjitter.pth.tar"
+CHECKPOINT_GEN_JITTER_SAVE = "../models/genJitter.pth.tar"
+CHECKPOINT_GEN_UNJITTER_SAVE = "../models/genUnjitter.pth.tar"
 
 MODEL_LOSSES_FILE = "../raw_data/model_losses.txt"
 MODEL_LOSSES_TITLES = ["epoch", "disc_loss", "gen_loss"]

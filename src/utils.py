@@ -4,46 +4,11 @@ import config
 from torchvision.utils import save_image, make_grid
 from skimage import filters
 
-def save_examples(gen, val_loader, epoch, folder):
+def save_jittered_examples(gen, val_loader, epoch, folder,):
     """
-    Save examples of output from generator as png images at a specified folder
-
-    Parameters
-    ----------
-    gen: torch.nn.Module instance
-        A generator neural network that will output image (or data required to 
-        generate an output image)
-
-    val_loader: torch.utils.Data.DataLoader instance
-        A dataloader containing dataset that will be input in the generator
-    
-    epoch: int
-        Epoch at which example is being taken
-
-    folder: string
-        Directory where output image will be saved
-    """
-    # Unpack jittered (x) and ground truth (y) images from dataloader and send to device
-    x, y, _ = next(iter(val_loader))
-    x, y = x.to(config.DEVICE), y.to(config.DEVICE)
-    gen.eval()
-    with torch.no_grad():
-        # Generate unshifted image using the GAN's generator network
-        y_fake = gen(x)
-        # Remove normalisation
-        y_fake = y_fake * 0.5 + 0.5 
-        # Save png of jittered, ground truth and generated unjitted image respectivly
-        save_image(x * 0.5 + 0.5, folder + f"/input_{epoch}.png")
-        save_image(y * 0.5 + 0.5, folder + f"/label_{epoch}.png")
-        save_image(y_fake, folder + f"/y_gen_{epoch}.png")
-    gen.train()
-
-def save_examples_concatinated(gen, val_loader, epoch, folder, save_sobel_score=False):
-    """
-    Save examples of output from generator as png images at a specified folder
+    Save examples of jittered output from generator as png images at a specified folder
     As opposed to saving images seperatly, images will be concatinated and outputted
     as a single image to increase ease to visually compare outputs from GAN
-    Can also output the sobel score of the generated images
 
     Parameters
     ----------
@@ -64,32 +29,72 @@ def save_examples_concatinated(gen, val_loader, epoch, folder, save_sobel_score=
         Class constining method required to unshift image using generator's 
         outputted flowmap
 
-    save_sobel_score: bool
-        Computes and returns the sobel score of the images generated
+    filename: str
+        Name of image file which will be saved
+
     """
     # Unpack jittered (x) and ground truth (y) images from dataloader and send to device
-    x, y, _ = next(iter(val_loader))
-    x, y = x.to(config.DEVICE), y.to(config.DEVICE)
+    _, unjittered = next(iter(val_loader))
+    unjittered = unjittered.to(config.DEVICE)
     gen.eval()
     with torch.no_grad():
         # Generate unshifted image using the GAN's generator network
-        y_fake = gen(y)
+        jittered_fake = gen(unjittered)
         # Remove normalisation
-        x = x * 0.5 + 0.5
-        y = y * 0.5 + 0.5
-        y_fake = y_fake * 0.5 + 0.5  
+        unjittered = unjittered * 0.5 + 0.5
+        jittered_fake = jittered_fake * 0.5 + 0.5
         # Concatinate all output images in Batch axis in order to have size (3, 1, H, W)
-        output = torch.cat([x, y, y_fake], dim=0)
+        output = torch.cat([unjittered, jittered_fake], dim=0)
         # Make image grid containing all desired output images
         image_grid = make_grid(output)
-        save_image(image_grid, folder + f"/output_{epoch}.png")
-
-        if save_sobel_score:
-            y_sobel = filters.sobel(y[:, :].numpy())
-            y_fake_sobel = filters.sobel(y_fake[:, :].numpy())
+        save_image(image_grid, folder + f"/jittered_{epoch}.png")
             
-            # Append value of L1 distance to list
-            return np.abs(y_sobel.sum() - y_fake_sobel.sum())
+    gen.train()
+
+def save_unjittered_examples(gen, val_loader, epoch, folder,):
+    """
+    Save examples of unjittered output from generator as png images at a specified folder
+    As opposed to saving images seperatly, images will be concatinated and outputted
+    as a single image to increase ease to visually compare outputs from GAN
+
+    Parameters
+    ----------
+    gen: torch.nn.Module instance
+        A generator neural network that will output image (or data required to 
+        generate an output image)
+
+    val_loader: torch.utils.Data.DataLoader instance
+        A dataloader containing dataset that will be input in the generator
+    
+    epoch: int
+        Epoch at which example is being taken
+
+    folder: string
+        Directory where output image will be saved
+
+    filter: torch.utils.Data.Dataset instance
+        Class constining method required to unshift image using generator's 
+        outputted flowmap
+
+    filename: str
+        Name of image file which will be saved
+
+    """
+    # Unpack jittered (x) and ground truth (y) images from dataloader and send to device
+    jittered, _ = next(iter(val_loader))
+    jittered = jittered.to(config.DEVICE)
+    gen.eval()
+    with torch.no_grad():
+        # Generate unshifted image using the GAN's generator network
+        unjittered_fake = gen(jittered)
+        # Remove normalisation
+        jittered = jittered * 0.5 + 0.5
+        unjittered_fake = unjittered_fake * 0.5 + 0.5
+        # Concatinate all output images in Batch axis in order to have size (3, 1, H, W)
+        output = torch.cat([jittered, unjittered_fake], dim=0)
+        # Make image grid containing all desired output images
+        image_grid = make_grid(output)
+        save_image(image_grid, folder + f"/unjittered_{epoch}.png")
             
     gen.train()
 
